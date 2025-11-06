@@ -24,7 +24,7 @@ Clone the repository and ensure requirements:
 ```bash
 git clone https://github.com/dumitr58/mssql-file-uploader.git
 cd mssql-file-uploader
-pip install -r requirements.txt   # requirements.txt can contain: impacket
+pip install -r requirements.txt   # requirements.txt contains: impacket
 ```
 
 ## Usage
