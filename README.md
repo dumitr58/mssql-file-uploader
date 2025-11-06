@@ -60,6 +60,17 @@ impacket-mssqlclient "user:pass@host" -file decode_commands/decode_certutil.sql
 3. If you have interactive access on the host, run certutil -decode or the PowerShell one-liner present in powershell_cmd.txt.
 4. Always verify SHA256 after decoding. Example helper in gethash_sql.sql.
 
+## 📸 Example Output
+
+Below is an example of a successful file upload and decode helper generation:
+![File upload demo](assets/demo_upload.png)
+
+Generated decode commands and helpers:
+![Decode helper files](assets/demo_decode.png)
+
+Using the Script after upload
+![Utilizing file](assets/upload_file_working.png)
+
 ## Security & Legal
 Only use this tool on systems you are explicitly authorized to test.
 Unauthorized use is illegal and unethical. Keep authorization documentation for all engagements.
