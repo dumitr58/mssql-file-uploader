@@ -25,3 +25,40 @@ Clone the repository and ensure requirements:
 git clone https://github.com/dumitr58/mssql-file-uploader.git
 cd mssql-file-uploader
 pip install -r requirements.txt   # requirements.txt can contain: impacket
+```
+
+## Usage
+```
+python3 uploader_write_decode_cmds.py <host> <username> <password> <local_file> --target "C:\\Users\\Public" [options]
+```
+
+## Example
+```
+python3 uploader_write_decode_cmds.py 10.10.205.148 "oscp.exam/sql_svc" 'Dolphin1' /home/kali/payload.exe --target "C:\\Users\\Public" --windows-auth
+```
+
+## Common options
+--chunk-size (default 1000) — base64 characters per upload chunk
+--retries (default 1) — retries per chunk
+--per-chunk-timeout (default 60) — timeout for each impacket invocation
+--windows-auth — use Impacket windows-auth mode
+--outdir — where to write decode helper files (default: decode_commands)
+
+## Output
+The script uploads <local_file>.b64 to the remote path you specify (or default C:\Windows\Temp).
+It writes helper files locally in decode_commands/ to guide decoding on the target (decode_certutil.sql, powershell_cmd.txt, gethash_sql.sql, etc.)
+
+## Decoding recommendations
+1. Use the SQL files with Impacket -file (safer for quoting and length). Example:
+```
+impacket-mssqlclient "user:pass@host" -file decode_commands/decode_certutil.sql
+```
+2. If you have interactive access on the host, run certutil -decode or the PowerShell one-liner present in powershell_cmd.txt.
+3. Always verify SHA256 after decoding. Example helper in gethash_sql.sql.
+
+## Security & Legal
+Only use this tool on systems you are explicitly authorized to test.
+Unauthorized use is illegal and unethical. Keep authorization documentation for all engagements.
+
+## Contributing
+Contributions welcome open issues or pull requests for bugfixes and improvements. Please follow the project's CONTRIBUTING.md for guidelines.
